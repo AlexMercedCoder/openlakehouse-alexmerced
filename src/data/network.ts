@@ -25,6 +25,7 @@ export const networkGroups: NetworkGroup[] = [
       { label: 'SemanticLakehouse.com', url: 'https://semanticlakehouse.com' },
       { label: 'IcebergLakehouse.com', url: 'https://iceberglakehouse.com' },
       { label: 'AgenticLakehouse.com', url: 'https://agenticlakehouse.com' },
+      { label: 'AgenticAnalyticsNow.com', url: 'https://agenticanalyticsnow.com' },
       { label: 'DataLakehouseHub.com', url: 'https://datalakehousehub.com' },
       { label: 'DataLakehouse.help', url: 'https://datalakehouse.help' },
       { label: 'DataEngnr.com', url: 'https://dataengnr.com' },
