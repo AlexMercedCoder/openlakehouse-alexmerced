@@ -1,0 +1,155 @@
+---
+import Base from '../layouts/Base.astro';
+import bookData from '../data/books.json';
+
+const { books, count, totalInCatalog, catalog, intro } = bookData;
+
+const topicLabels: Record<string, string> = {
+  iceberg: 'Apache Iceberg',
+  lakehouse: 'Lakehouse',
+  catalogs: 'Catalogs',
+  semantic: 'Semantic layer',
+  'data-engineering': 'Data engineering',
+  agentic: 'Agents',
+};
+
+const jsonLd = [{
+  '@type': 'CollectionPage',
+  '@id': 'https://openlakehouse.alexmerced.com/books#page',
+  name: 'Lakehouse and data books by Alex Merced',
+  url: 'https://openlakehouse.alexmerced.com/books',
+  description: intro,
+  isPartOf: { '@id': 'https://openlakehouse.alexmerced.com/#website' },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: count,
+    itemListElement: books.map((book, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Book',
+        name: book.title,
+        url: book.canonicalPage,
+        author: { '@id': 'https://alexmerced.com/#alexmerced' },
+        ...(book.publisher ? { publisher: { '@type': 'Organization', name: book.publisher } } : {}),
+      },
+    })),
+  },
+}];
+---
+
+<Base
+  title="Lakehouse and data books"
+  description={intro}
+  jsonLd={jsonLd}
+  keywords={['Apache Iceberg book', 'data lakehouse books', 'Alex Merced books', 'Apache Iceberg: The Definitive Guide']}
+>
+  <section class="page-head">
+    <div class="shell">
+      <p class="eyebrow">Longer form</p>
+      <h1>Books</h1>
+      <p class="page-head__lede">{intro}</p>
+      <p class="page-head__meta">
+        {count} of {totalInCatalog} titles shown here.
+        <a href={catalog} rel="noopener">The complete catalog</a> covers the rest, including
+        economics, fiction, and tabletop roleplaying.
+      </p>
+    </div>
+  </section>
+
+  <section class="shell book-section">
+    <div class="filters" role="group" aria-label="Filter books by topic">
+      <button type="button" class="filter is-active" data-topic="all">All ({count})</button>
+      {Object.entries(topicLabels).map(([topic, label]) => {
+        const total = books.filter((b) => b.topics.includes(topic)).length;
+        return total > 0 ? (
+          <button type="button" class="filter" data-topic={topic}>{label} ({total})</button>
+        ) : null;
+      })}
+    </div>
+
+    <ul class="books">
+      {books.map((book) => (
+        <li class="book" data-topics={book.topics.join(' ')}>
+          <a class="book__cover" href={book.canonicalPage} rel="noopener" tabindex="-1" aria-hidden="true">
+            <img src={book.cover} alt="" loading="lazy" width="160" height="240" />
+          </a>
+          <div class="book__body">
+            {book.flagship && <span class="book__flag">Flagship title</span>}
+            <h2 class="book__title"><a href={book.canonicalPage} rel="noopener">{book.title}</a></h2>
+            {book.publisher && <p class="book__publisher">{book.publisher}</p>}
+            <p class="book__desc">{book.description}</p>
+            <p class="book__links">
+              <a href={book.canonicalPage} rel="noopener">Details</a>
+              <a href={book.amazon} rel="noopener">Buy on Amazon</a>
+            </p>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <p class="book-section__empty" hidden>No titles carry that tag.</p>
+  </section>
+</Base>
+
+<script>
+  const filters = document.querySelectorAll<HTMLButtonElement>('.filter');
+  const items = document.querySelectorAll<HTMLElement>('.book');
+  const empty = document.querySelector<HTMLElement>('.book-section__empty');
+
+  filters.forEach((button) => {
+    button.addEventListener('click', () => {
+      const topic = button.dataset.topic ?? 'all';
+      filters.forEach((other) => other.classList.toggle('is-active', other === button));
+
+      let shown = 0;
+      items.forEach((item) => {
+        const topics = (item.dataset.topics ?? '').split(' ');
+        const visible = topic === 'all' || topics.includes(topic);
+        item.hidden = !visible;
+        if (visible) shown += 1;
+      });
+      if (empty) empty.hidden = shown > 0;
+    });
+  });
+</script>
+
+<style>
+  .page-head { background: var(--surface); padding: 3rem 0 2.75rem; border-bottom: 1px solid var(--rule); }
+  .page-head h1 { margin: 0 0 1rem; }
+  .page-head__lede { max-width: 44rem; font-size: 1.08rem; color: var(--ink-soft); margin: 0 0 1rem; }
+  .page-head__meta { max-width: 44rem; font-size: 0.92rem; color: var(--ink-soft); margin: 0; }
+
+  .book-section { padding: 2.5rem 0 1rem; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .filter {
+    font: 600 0.85rem/1 var(--sans); padding: 0.55rem 0.9rem; cursor: pointer;
+    border: 1px solid var(--rule); border-radius: 999px; background: var(--surface-raised); color: var(--ink);
+  }
+  .filter:hover { border-color: var(--depth-700); }
+  .filter.is-active { background: var(--depth-900); border-color: var(--depth-900); color: #fff; }
+
+  .books { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+  .book {
+    display: grid; grid-template-columns: 160px 1fr; gap: 1.5rem;
+    padding: 1.4rem; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--surface-raised);
+  }
+  .book[hidden] { display: none; }
+  .book__cover img { width: 100%; height: auto; display: block; border-radius: 4px; box-shadow: 0 6px 18px rgba(7,23,32,.16); }
+  .book__flag {
+    display: inline-block; font: 600 0.68rem var(--mono); letter-spacing: .1em; text-transform: uppercase;
+    color: var(--catalog); margin-bottom: 0.35rem;
+  }
+  .book__title { font-size: 1.2rem; margin: 0 0 0.3rem; }
+  .book__title a { text-decoration: none; }
+  .book__title a:hover { text-decoration: underline; }
+  .book__publisher { font: 600 0.72rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 0.6rem; }
+  .book__desc { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+  .book__links { display: flex; gap: 1.25rem; margin: 0.9rem 0 0; font-size: 0.9rem; font-weight: 650; }
+  .book-section__empty { color: var(--ink-soft); }
+
+  @media (max-width: 640px) {
+    .book { grid-template-columns: 1fr; gap: 1rem; }
+    .book__cover { max-width: 130px; }
+  }
+</style>

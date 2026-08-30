@@ -1,0 +1,168 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import LakehouseDiagram from '../components/LakehouseDiagram.astro';
+import { dremioHighlights, channels } from '../data/work';
+
+const entries = await getCollection('kb');
+const concepts = entries.filter((e) => e.data.kind === 'concept').sort((a, b) => a.data.order - b.data.order);
+const technologies = entries.filter((e) => e.data.kind === 'technology').sort((a, b) => a.data.order - b.data.order);
+const featured = dremioHighlights.slice(0, 3);
+---
+
+<Base
+  title="Alex Merced, Open Lakehouse advocate"
+  description="Reference material on open lakehouse architecture from Alex Merced: object storage, file and table formats, catalogs, semantic layers, and the engines that read them. Includes a knowledge base covering Apache Arrow, Parquet, Iceberg, Polaris, and Ossie."
+  keywords={['open lakehouse', 'data lakehouse', 'Apache Iceberg', 'Apache Polaris', 'Apache Arrow', 'Apache Parquet', 'Apache Ossie', 'table format', 'data catalog', 'semantic layer', 'Alex Merced']}
+>
+  <section class="hero">
+    <div class="shell hero__grid">
+      <div class="hero__copy">
+        <p class="eyebrow">Open lakehouse architecture</p>
+        <h1>Your data, in formats<br />anything can read.</h1>
+        <p class="hero__lede">
+          An open lakehouse keeps analytical data in open formats on storage you control, and adds
+          enough metadata that those files behave like tables. Any compliant engine can read them.
+          No vendor sits between you and your own data.
+        </p>
+        <p class="hero__lede">
+          This site is where I collect the reference material: the vocabulary, the layers, and the
+          projects that carry them.
+        </p>
+        <div class="hero__actions">
+          <a class="button" href="/knowledge-base">Read the knowledge base</a>
+          <a class="button button--ghost" href="/work">Where to find my work</a>
+        </div>
+      </div>
+      <div class="hero__figure">
+        <LakehouseDiagram />
+      </div>
+    </div>
+  </section>
+
+  <section class="shell band">
+    <div class="band__head">
+      <h2>Start with the vocabulary</h2>
+      <p>
+        Most disagreements about the lakehouse turn out to be two people using one word for
+        different things. These entries fix the terms first.
+      </p>
+    </div>
+    <ol class="concept-strip">
+      {concepts.slice(0, 6).map((entry, index) => (
+        <li>
+          <a href={`/knowledge-base/${entry.id}`}>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <strong>{entry.data.title}</strong>
+            <em>{entry.data.summary}</em>
+          </a>
+        </li>
+      ))}
+    </ol>
+    <p class="band__more"><a href="/knowledge-base#concepts">All {concepts.length} concept entries</a></p>
+  </section>
+
+  <section class="tech">
+    <div class="shell">
+      <div class="band__head band__head--light">
+        <h2>The projects that carry the weight</h2>
+        <p>
+          Five open projects do most of the work in a modern lakehouse. One page each, covering what
+          it is, where it fits, and where it stops.
+        </p>
+      </div>
+      <div class="tech__grid">
+        {technologies.map((entry) => (
+          <a class="tech__card" href={`/knowledge-base/${entry.id}`}>
+            <strong>{entry.data.title}</strong>
+            <span>{entry.data.summary}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="shell band">
+    <div class="band__head">
+      <h2>Where to start reading</h2>
+      <p>A few pieces from the Dremio blog that cover the ground this site is about.</p>
+    </div>
+    <ul class="feature-list">
+      {featured.map((item) => (
+        <li>
+          <a href={item.url} rel="noopener">
+            <span class="feature-list__tag">{item.tag}</span>
+            <strong>{item.title}</strong>
+            <span class="feature-list__note">{item.note}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="band__more"><a href="/work">Everything else, including video and community</a></p>
+  </section>
+
+  <section class="shell channels">
+    {channels.map((channel) => (
+      <a class="channel" href={channel.url} rel="noopener">
+        <strong>{channel.name}</strong>
+        <span>{channel.description}</span>
+        <em>{channel.action}</em>
+      </a>
+    ))}
+  </section>
+</Base>
+
+<style>
+  .hero { background: var(--surface); padding: 3.5rem 0 4rem; border-bottom: 1px solid var(--rule); }
+  .hero__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .hero h1 { margin-bottom: 1.4rem; }
+  .hero__lede { font-size: 1.1rem; color: var(--ink-soft); max-width: 32rem; }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+  .hero__actions .button--ghost { color: var(--ink); }
+  .hero__actions .button--ghost:hover { background: rgba(0,0,0,.05); }
+
+  .band { padding: 4rem 0 3rem; }
+  .band__head { max-width: 44rem; margin-bottom: 2rem; }
+  .band__head h2 { margin-bottom: 0.6rem; }
+  .band__head p { color: var(--ink-soft); margin: 0; }
+  .band__head--light h2, .band__head--light p { color: #eaf1f3; }
+  .band__head--light p { color: #a3b7bf; }
+  .band__more { margin: 1.75rem 0 0; font-weight: 650; font-size: 0.95rem; }
+
+  .concept-strip { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .concept-strip a { display: grid; gap: 0.4rem; background: var(--surface-raised); padding: 1.4rem 1.25rem; text-decoration: none; height: 100%; }
+  .concept-strip a:hover { background: #fff; }
+  .concept-strip span { font: 600 0.75rem var(--mono); color: var(--catalog); }
+  .concept-strip strong { font-family: var(--display); font-size: 1.1rem; }
+  .concept-strip em { font-style: normal; font-size: 0.88rem; color: var(--ink-soft); }
+
+  .tech { background: var(--depth-900); color: #eaf1f3; padding: 4rem 0; }
+  .tech__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem; }
+  .tech__card {
+    display: grid; gap: 0.5rem; padding: 1.4rem 1.2rem; text-decoration: none;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius);
+    border-top: 3px solid var(--file);
+  }
+  .tech__card:hover { background: rgba(255,255,255,.09); }
+  .tech__card strong { font-family: var(--display); font-size: 1.12rem; color: #fff; }
+  .tech__card span { font-size: 0.88rem; color: #a3b7bf; }
+
+  .feature-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .feature-list li { border-bottom: 1px solid var(--rule); }
+  .feature-list a { display: grid; gap: 0.35rem; padding: 1.3rem 0.25rem; text-decoration: none; }
+  .feature-list a:hover { background: var(--surface-raised); }
+  .feature-list__tag { font: 600 0.7rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--semantic); }
+  .feature-list strong { font-family: var(--display); font-size: 1.15rem; }
+  .feature-list__note { color: var(--ink-soft); font-size: 0.94rem; }
+
+  .channels { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.25rem; padding-bottom: 1rem; }
+  .channel { display: grid; gap: 0.5rem; padding: 1.5rem 1.35rem; text-decoration: none; border: 1px solid var(--rule); background: var(--surface-raised); border-radius: var(--radius); }
+  .channel:hover { background: #fff; }
+  .channel strong { font-family: var(--display); font-size: 1.15rem; }
+  .channel span { font-size: 0.9rem; color: var(--ink-soft); }
+  .channel em { font-style: normal; font-size: 0.85rem; font-weight: 650; color: var(--depth-700); }
+
+  @media (max-width: 900px) {
+    .hero__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+</style>

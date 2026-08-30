@@ -1,0 +1,121 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const entries = await getCollection('kb');
+const concepts = entries.filter((e) => e.data.kind === 'concept').sort((a, b) => a.data.order - b.data.order);
+const technologies = entries.filter((e) => e.data.kind === 'technology').sort((a, b) => a.data.order - b.data.order);
+
+const jsonLd = [
+  {
+    '@type': 'CollectionPage',
+    '@id': 'https://openlakehouse.alexmerced.com/knowledge-base#collection',
+    name: 'Open lakehouse knowledge base',
+    url: 'https://openlakehouse.alexmerced.com/knowledge-base',
+    description: `Reference entries covering open lakehouse terminology, architecture, and the key technologies. ${entries.length} entries.`,
+    isPartOf: { '@id': 'https://openlakehouse.alexmerced.com/#website' },
+    inLanguage: 'en-US',
+    author: { '@id': 'https://alexmerced.com/#alexmerced' },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: entries.length,
+      itemListElement: [...concepts, ...technologies].map((entry, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: entry.data.title,
+        url: `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}`,
+      })),
+    },
+  },
+];
+---
+
+<Base
+  title="Knowledge base"
+  description="Open lakehouse terminology and architecture explained: object storage, file and table formats, catalogs, semantic layers, engines, and the key Apache projects behind them."
+  keywords={['open lakehouse', 'data lakehouse terminology', 'Apache Iceberg', 'Apache Polaris', 'Apache Arrow', 'Apache Parquet', 'Apache Ossie', 'table format', 'catalog']}
+  jsonLd={jsonLd}
+>
+  <section class="kb-hero shell">
+    <p class="eyebrow">Knowledge base</p>
+    <h1>The vocabulary of the open lakehouse.</h1>
+    <p class="kb-hero__lede">
+      Each entry covers one idea: what it is, the problem it solves, where it stops, and which
+      primary sources to read next. Start at the top if the whole architecture is new to you, or go
+      straight to a technology if you already know where you are.
+    </p>
+  </section>
+
+  <section class="shell kb-group" id="concepts">
+    <div class="kb-group__head">
+      <h2>Concepts</h2>
+      <p>The layers and ideas that make up the architecture, in the order they build on each other.</p>
+    </div>
+    <ol class="kb-list">
+      {concepts.map((entry, index) => (
+        <li>
+          <a href={`/knowledge-base/${entry.id}`}>
+            <span class="kb-list__num">{String(index + 1).padStart(2, '0')}</span>
+            <span class="kb-list__body">
+              <strong>{entry.data.title}</strong>
+              <span>{entry.data.summary}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="shell kb-group" id="technologies">
+    <div class="kb-group__head">
+      <h2>Key technologies</h2>
+      <p>The five open projects that carry most of the weight in a modern lakehouse, one page each.</p>
+    </div>
+    <div class="kb-cards">
+      {technologies.map((entry) => (
+        <a class="kb-card" href={`/knowledge-base/${entry.id}`}>
+          <strong>{entry.data.title}</strong>
+          <span>{entry.data.summary}</span>
+          <em>Read the entry</em>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .kb-hero { padding: 4rem 0 2.5rem; max-width: 46rem; }
+  .kb-hero h1 { margin-bottom: 1.2rem; }
+  .kb-hero__lede { font-size: 1.14rem; color: var(--ink-soft); margin: 0; }
+
+  .kb-group { padding: 2.5rem 0; }
+  .kb-group__head { border-bottom: 2px solid var(--ink); padding-bottom: 1rem; margin-bottom: 2rem; }
+  .kb-group__head h2 { margin: 0 0 0.4rem; }
+  .kb-group__head p { margin: 0; color: var(--ink-soft); max-width: 44rem; }
+
+  .kb-list { list-style: none; margin: 0; padding: 0; }
+  .kb-list li { border-bottom: 1px solid var(--rule); }
+  .kb-list a {
+    display: grid; grid-template-columns: 3.2rem 1fr; gap: 1rem;
+    padding: 1.15rem 0.25rem; text-decoration: none; align-items: baseline;
+  }
+  .kb-list a:hover { background: var(--surface-raised); }
+  .kb-list__num { font: 600 0.8rem var(--mono); color: var(--catalog); }
+  .kb-list__body strong { display: block; font-family: var(--display); font-size: 1.14rem; margin-bottom: 0.2rem; }
+  .kb-list__body span { color: var(--ink-soft); font-size: 0.94rem; }
+
+  .kb-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .kb-card {
+    background: var(--surface-raised); padding: 1.6rem 1.4rem 1.4rem;
+    text-decoration: none; display: flex; flex-direction: column; gap: 0.55rem;
+    border-top: 3px solid var(--catalog);
+  }
+  .kb-card:hover { background: #fff; }
+  .kb-card strong { font-family: var(--display); font-size: 1.2rem; }
+  .kb-card span { color: var(--ink-soft); font-size: 0.92rem; flex-grow: 1; }
+  .kb-card em { font-style: normal; font-size: 0.82rem; font-weight: 650; color: var(--depth-700); }
+
+  @media (max-width: 560px) {
+    .kb-list a { grid-template-columns: 2.4rem 1fr; gap: 0.7rem; }
+  }
+</style>

@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+import { dremioHighlights, channels, playlists, community } from '../data/work';
+
+const jsonLd = [{
+  '@type': 'CollectionPage',
+  '@id': 'https://openlakehouse.alexmerced.com/work#page',
+  name: 'Where to find my open lakehouse work',
+  url: 'https://openlakehouse.alexmerced.com/work',
+  description:
+    'Selected writing on the Dremio blog, YouTube playlists, Data Lakehouse Hub, and the community spaces where Alex Merced publishes open lakehouse material.',
+  isPartOf: { '@id': 'https://openlakehouse.alexmerced.com/#website' },
+  about: { '@id': 'https://alexmerced.com/#alexmerced' },
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: dremioHighlights.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.title,
+      url: item.url,
+    })),
+  },
+}];
+---
+
+<Base
+  title="Where to find my open lakehouse work"
+  description="Selected articles from the Dremio blog, YouTube playlists on lakehouse engineering, the Data Lakehouse Hub community, and the podcast. The published side of Alex Merced's open lakehouse work."
+  jsonLd={jsonLd}
+  keywords={['Alex Merced', 'Dremio blog', 'lakehouse videos', 'Data Lakehouse Hub', 'Apache Iceberg articles']}
+>
+  <section class="page-head">
+    <div class="shell">
+      <p class="eyebrow">The published work</p>
+      <h1>Where to find it</h1>
+      <p class="page-head__lede">
+        Most of what I publish about the lakehouse lands in one of four places: the Dremio blog,
+        YouTube, the Data Lakehouse Hub, or a book. This page points at each of them, with the
+        pieces worth reading first.
+      </p>
+    </div>
+  </section>
+
+  <section class="shell block">
+    <h2>Start here</h2>
+    <p class="block__note">
+      Six posts that cover the ground this site is about, roughly in the order the layers stack up.
+    </p>
+    <ul class="pieces">
+      {dremioHighlights.map((item) => (
+        <li>
+          <a href={item.url} rel="noopener">
+            <span class="pieces__tag">{item.tag}</span>
+            <strong>{item.title}</strong>
+            <span class="pieces__note">{item.note}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="block__more">
+      <a href="https://www.dremio.com/blog/author/alex-merced/" rel="noopener">The full Dremio blog archive</a>
+    </p>
+  </section>
+
+  <section class="block block--dark">
+    <div class="shell">
+      <h2>The channels</h2>
+      <div class="channel-grid">
+        {channels.map((channel) => (
+          <a class="channel-card" href={channel.url} rel="noopener">
+            <strong>{channel.name}</strong>
+            <span>{channel.description}</span>
+            <em>{channel.action}</em>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="shell block">
+    <h2>Video playlists</h2>
+    <p class="block__note">
+      The channel covers a wider range than this site does. These two playlists are the lakehouse
+      part of it.
+    </p>
+    <ul class="playlists">
+      {playlists.map((playlist) => (
+        <li>
+          <a href={playlist.url} rel="noopener">
+            <strong>{playlist.title}</strong>
+            <span>{playlist.note}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="shell block">
+    <h2>Community</h2>
+    <p class="block__note">
+      Places to ask a question, argue about a design, or find out what other people ran into before
+      you did.
+    </p>
+    <ul class="community">
+      {community.map((item) => (
+        <li><a href={item.url} rel="noopener">{item.label}</a></li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="shell block">
+    <h2>Longer form</h2>
+    <p class="block__note">
+      When a subject needs more room than a blog post gives it, it usually turns into a book.
+    </p>
+    <p class="block__more"><a href="/books">The lakehouse and data books</a></p>
+  </section>
+</Base>
+
+<style>
+  .page-head { background: var(--surface); padding: 3rem 0 2.75rem; border-bottom: 1px solid var(--rule); }
+  .page-head h1 { margin: 0 0 1rem; }
+  .page-head__lede { max-width: 42rem; font-size: 1.08rem; color: var(--ink-soft); margin: 0; }
+
+  .block { padding: 3rem 0 1rem; }
+  .block h2 { margin: 0 0 0.6rem; }
+  .block__note { max-width: 42rem; color: var(--ink-soft); margin: 0 0 1.75rem; }
+  .block__more { margin: 1.5rem 0 0; font-weight: 650; }
+
+  .block--dark { background: var(--depth-900); color: #eaf1f3; padding: 3.25rem 0; margin: 2rem 0 0; }
+  .block--dark h2 { color: #fff; margin-bottom: 1.5rem; }
+
+  .pieces { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .pieces li { border-bottom: 1px solid var(--rule); }
+  .pieces a { display: grid; gap: 0.35rem; padding: 1.25rem 0.25rem; text-decoration: none; }
+  .pieces a:hover { background: var(--surface-raised); }
+  .pieces__tag { font: 600 0.7rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--semantic); }
+  .pieces strong { font-family: var(--display); font-size: 1.12rem; }
+  .pieces__note { color: var(--ink-soft); font-size: 0.93rem; }
+
+  .channel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+  .channel-card {
+    display: grid; gap: 0.5rem; padding: 1.4rem 1.25rem; text-decoration: none;
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+    border-top: 3px solid var(--catalog); border-radius: var(--radius);
+  }
+  .channel-card:hover { background: rgba(255,255,255,.09); }
+  .channel-card strong { font-family: var(--display); font-size: 1.12rem; color: #fff; }
+  .channel-card span { font-size: 0.88rem; color: #a3b7bf; }
+  .channel-card em { font-style: normal; font-size: 0.82rem; font-weight: 650; color: var(--file); }
+
+  .playlists { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; }
+  .playlists a { display: grid; gap: 0.4rem; padding: 1.3rem 1.2rem; text-decoration: none; border: 1px solid var(--rule); background: var(--surface-raised); border-radius: var(--radius); height: 100%; }
+  .playlists a:hover { background: #fff; }
+  .playlists strong { font-family: var(--display); font-size: 1.1rem; }
+  .playlists span { font-size: 0.9rem; color: var(--ink-soft); }
+
+  .community { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .community a {
+    display: inline-block; padding: 0.5rem 0.9rem; text-decoration: none; font-size: 0.92rem;
+    font-weight: 600; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface-raised);
+  }
+  .community a:hover { background: var(--depth-900); color: #fff; border-color: var(--depth-900); }
+</style>

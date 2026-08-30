@@ -1,0 +1,152 @@
+---
+/**
+ * The lakehouse, drawn as the stack it actually is: object storage at the
+ * bottom, then the file format, the table format, the catalog, the semantic
+ * layer, and the engines that read through all of it.
+ *
+ * The animation carries one idea only, that a query resolves downward through
+ * the layers and data flows back up. Everything needed to understand the
+ * diagram is in the static frame, so reduced motion loses nothing.
+ */
+const layers = [
+  { id: 'engines',  label: 'Query engines',   note: 'Any compliant engine',        color: 'var(--engine)',   y: 24 },
+  { id: 'semantic', label: 'Semantic layer',  note: 'Metrics and meaning',         color: 'var(--semantic)', y: 92 },
+  { id: 'catalog',  label: 'Catalog',         note: 'Names, access, commits',      color: 'var(--catalog)',  y: 160 },
+  { id: 'table',    label: 'Table format',    note: 'Snapshots and schema',        color: 'var(--table)',    y: 228 },
+  { id: 'file',     label: 'File format',     note: 'Columnar on disk',            color: 'var(--file)',     y: 296 },
+  { id: 'storage',  label: 'Object storage',  note: 'Your bucket, your bytes',     color: 'var(--storage)',  y: 364 },
+];
+---
+
+<figure class="diagram">
+  <svg
+    viewBox="0 0 640 452"
+    role="img"
+    aria-labelledby="diagram-title diagram-desc"
+    class="diagram__svg"
+  >
+    <title id="diagram-title">The open lakehouse stack</title>
+    <desc id="diagram-desc">
+      Six layers drawn from the bottom up: object storage, file format, table format, catalog,
+      semantic layer, and query engines. Queries resolve downward through the layers and data
+      returns upward. Each layer is independently replaceable.
+    </desc>
+
+    <defs>
+      <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0c2430" />
+        <stop offset="100%" stop-color="#071720" />
+      </linearGradient>
+      <clipPath id="stackClip">
+        <rect x="70" y="16" width="420" height="420" rx="4" />
+      </clipPath>
+    </defs>
+
+    <rect x="0" y="0" width="640" height="452" fill="url(#water)" rx="6" />
+
+    {layers.map((layer, index) => (
+      <g class="layer" data-layer={layer.id} style={`--layer-color: ${layer.color}; --layer-index: ${index};`}>
+        <rect x="70" y={layer.y} width="420" height="56" rx="4" class="layer__plate" />
+        <rect x="70" y={layer.y} width="5" height="56" rx="2" fill={layer.color} />
+        <text x="94" y={layer.y + 25} class="layer__label">{layer.label}</text>
+        <text x="94" y={layer.y + 43} class="layer__note">{layer.note}</text>
+        <circle cx="466" cy={layer.y + 28} r="4" class="layer__dot" />
+      </g>
+    ))}
+
+    <g clip-path="url(#stackClip)" aria-hidden="true">
+      <circle class="pulse pulse--down" r="5" cx="280" cy="0" />
+      <circle class="pulse pulse--up" r="4" cx="330" cy="0" />
+    </g>
+
+    <g class="rail" aria-hidden="true">
+      <text x="520" y="52" class="rail__text">read</text>
+      <text x="520" y="404" class="rail__text">write</text>
+      <line x1="512" y1="70" x2="512" y2="386" class="rail__line" />
+    </g>
+  </svg>
+
+  <figcaption class="diagram__caption">
+    Each layer is an interface. Swap any one of them and the others keep working.
+  </figcaption>
+</figure>
+
+<style>
+  .diagram { margin: 0; }
+  .diagram__svg { width: 100%; height: auto; display: block; border-radius: 6px; }
+  .diagram__caption {
+    margin-top: 0.9rem;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+
+  .layer__plate {
+    fill: rgba(255, 255, 255, 0.045);
+    stroke: rgba(255, 255, 255, 0.11);
+    stroke-width: 1;
+  }
+  .layer__label {
+    fill: #f2f6f7;
+    font: 600 15px var(--sans);
+  }
+  .layer__note {
+    fill: #8fa3ab;
+    font: 12px var(--sans);
+  }
+  .layer__dot {
+    fill: var(--layer-color);
+    opacity: 0.35;
+  }
+
+  /* The plate brightens as the query reaches it, staggered down the stack. */
+  .layer__plate {
+    animation: settle 9s ease-in-out infinite;
+    animation-delay: calc(var(--layer-index) * 0.28s);
+  }
+  .layer__dot {
+    animation: blink 9s ease-in-out infinite;
+    animation-delay: calc(var(--layer-index) * 0.28s);
+  }
+
+  @keyframes settle {
+    0%, 46%, 100% { fill: rgba(255, 255, 255, 0.045); }
+    18% { fill: rgba(255, 255, 255, 0.1); }
+  }
+  @keyframes blink {
+    0%, 46%, 100% { opacity: 0.3; r: 4; }
+    18% { opacity: 1; r: 5.5; }
+  }
+
+  .pulse { fill: #ffd27f; }
+  .pulse--down { animation: fall 9s cubic-bezier(.5, 0, .5, 1) infinite; }
+  .pulse--up { fill: #7fd6c4; animation: rise 9s cubic-bezier(.5, 0, .5, 1) infinite; }
+
+  @keyframes fall {
+    0%   { cy: 10px; opacity: 0; }
+    6%   { opacity: 1; }
+    42%  { cy: 400px; opacity: 1; }
+    50%  { cy: 400px; opacity: 0; }
+    100% { cy: 400px; opacity: 0; }
+  }
+  @keyframes rise {
+    0%, 46%  { cy: 400px; opacity: 0; }
+    52%      { opacity: 1; }
+    88%      { cy: 30px; opacity: 1; }
+    96%, 100% { cy: 30px; opacity: 0; }
+  }
+
+  .rail__line { stroke: rgba(255,255,255,.18); stroke-width: 1; stroke-dasharray: 3 5; }
+  .rail__text { fill: #6f838b; font: 600 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+
+  @media (max-width: 560px) {
+    .layer__label { font-size: 14px; }
+    .layer__note { font-size: 11px; }
+  }
+
+  /* Motion is decoration here. The static frame already carries the meaning. */
+  @media (prefers-reduced-motion: reduce) {
+    .layer__plate, .layer__dot, .pulse { animation: none; }
+    .pulse { opacity: 0; }
+    .layer__dot { opacity: 0.6; }
+  }
+</style>

@@ -1,0 +1,135 @@
+---
+import { getCollection } from 'astro:content';
+import { dremioHighlights, channels, playlists, community } from '../data/work';
+import bookData from '../data/books.json';
+
+const entries = await getCollection('kb');
+
+const knowledgeBase = entries
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((entry) => ({
+    slug: entry.id,
+    title: entry.data.title,
+    kind: entry.data.kind,
+    summary: entry.data.summary,
+    keywords: entry.data.keywords ?? [],
+    apacheProject: entry.data.apacheProject ?? false,
+    related: entry.data.related ?? [],
+    sources: (entry.data.sources ?? []).map((s) => ({ label: s.label, url: s.url })),
+    url: `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}`,
+  }));
+
+const work = {
+  writing: dremioHighlights,
+  channels,
+  playlists,
+  community,
+};
+
+const books = {
+  catalog: bookData.catalog,
+  shown: bookData.count,
+  totalInCatalog: bookData.totalInCatalog,
+  titles: bookData.books.map((b) => ({
+    title: b.title,
+    topics: b.topics,
+    publisher: b.publisher,
+    details: b.canonicalPage,
+    amazon: b.amazon,
+  })),
+};
+---
+
+<script is:inline define:vars={{ knowledgeBase, work, books }}>
+  (function () {
+    // The proposal has moved between navigator and document; accept either.
+    const ctx = navigator.modelContext || document.modelContext;
+    if (!ctx || typeof ctx.registerTool !== 'function') return;
+
+    const ok = (value) => ({
+      content: [{ type: 'text', text: JSON.stringify(value, null, 2) }],
+    });
+
+    const match = (entry, term) => {
+      const hay = [entry.title, entry.summary, entry.slug, ...(entry.keywords || [])]
+        .join(' ')
+        .toLowerCase();
+      return hay.includes(term);
+    };
+
+    const tools = [
+      {
+        name: 'list_knowledge_base',
+        description:
+          'List every entry in the Open Lakehouse knowledge base on openlakehouse.alexmerced.com. Returns concept entries (architecture and vocabulary) and technology entries (Apache Parquet, Arrow, Iceberg, Polaris, Ossie) with slugs, summaries, and URLs.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            kind: {
+              type: 'string',
+              enum: ['concept', 'technology'],
+              description: 'Optional filter. Omit to list everything.',
+            },
+          },
+        },
+        execute: async ({ kind } = {}) =>
+          ok(kind ? knowledgeBase.filter((e) => e.kind === kind) : knowledgeBase),
+      },
+      {
+        name: 'search_knowledge_base',
+        description:
+          'Search the Open Lakehouse knowledge base by keyword. Matches entry titles, summaries, and keywords. Use this to find the page covering a term such as table format, catalog, manifest, partitioning, time travel, or a specific Apache project.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            query: { type: 'string', description: 'Word or phrase to look for.' },
+          },
+          required: ['query'],
+        },
+        execute: async ({ query }) => {
+          const term = String(query || '').toLowerCase().trim();
+          if (!term) return ok([]);
+          return ok(knowledgeBase.filter((entry) => match(entry, term)));
+        },
+      },
+      {
+        name: 'get_knowledge_base_entry',
+        description:
+          'Get the metadata for one Open Lakehouse knowledge base entry by slug, including its summary, primary sources, related entries, and canonical URL. Fetch the URL for the full text.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            slug: { type: 'string', description: 'Entry slug, for example apache-iceberg.' },
+          },
+          required: ['slug'],
+        },
+        execute: async ({ slug }) => {
+          const entry = knowledgeBase.find((e) => e.slug === slug);
+          return ok(entry || { error: `No entry with slug "${slug}".`, available: knowledgeBase.map((e) => e.slug) });
+        },
+      },
+      {
+        name: 'list_lakehouse_work',
+        description:
+          "List where Alex Merced's open lakehouse work is published: selected articles on the Dremio blog, the YouTube channel and its playlists, DataLakehouseHub, and community links.",
+        inputSchema: { type: 'object', properties: {} },
+        execute: async () => ok(work),
+      },
+      {
+        name: 'list_lakehouse_books',
+        description:
+          'List the books Alex Merced has written on lakehouse and data topics, with publisher, topic tags, a details page, and a purchase link. The complete catalog across all subjects lives at books.alexmerced.com.',
+        inputSchema: { type: 'object', properties: {} },
+        execute: async () => ok(books),
+      },
+    ];
+
+    for (const tool of tools) {
+      try {
+        ctx.registerTool(tool);
+      } catch (error) {
+        /* a browser without WebMCP support, or a duplicate registration */
+      }
+    }
+  })();
+</script>

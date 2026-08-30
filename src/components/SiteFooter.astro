@@ -1,0 +1,91 @@
+---
+import { networkGroups, communityLinks, connectLinks, newsletter, TRADEMARK_NOTICE } from '../data/network';
+const year = new Date().getFullYear();
+---
+
+<section class="newsletter" id="newsletter">
+  <div class="shell newsletter__grid">
+    <div>
+      <p class="eyebrow">Two newsletters, one list</p>
+      <h2>Read the week before you build.</h2>
+      <p>
+        I write two free weekly newsletters on Substack. One subscription gets you both.
+      </p>
+      <a class="button" href={newsletter.url} rel="noopener">Subscribe on Substack</a>
+    </div>
+    <ul class="newsletter__list">
+      {newsletter.editions.map((edition) => (
+        <li>
+          <span>{edition.day.toUpperCase()}</span>
+          <strong>{edition.title}</strong>
+          <p>{edition.note}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer-lede">
+      <p class="eyebrow" style="color: var(--catalog); margin: 0;">Alex Merced, Open Lakehouse advocate</p>
+      <p>
+        Writing, teaching, and reference material on open lakehouse architecture from Alex Merced,
+        Head of Developer Relations at Dremio. One node in the Alex Merced network of sites.
+      </p>
+    </div>
+
+    <nav class="footer-cols" aria-label="The Alex Merced network">
+      {networkGroups.map((group) => (
+        <div>
+          <h2>{group.title}</h2>
+          <ul>
+            {group.links.map((link) => (
+              <li><a href={link.url} rel="noopener">{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+
+    <nav class="footer-cols" aria-label="Community, connect, and this site">
+      <div>
+        <h2>Community</h2>
+        <ul>
+          {communityLinks.map((link) => (
+            <li><a href={link.url} rel="noopener">{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2>Connect</h2>
+        <ul>
+          {connectLinks.map((link) => (
+            <li><a href={link.url} rel="me noopener">{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2>This site</h2>
+        <ul>
+          <li><a href="/knowledge-base">Knowledge base</a></li>
+          <li><a href="/work">Where to find my work</a></li>
+          <li><a href="/books">Books</a></li>
+          <li><a href="/llms.txt">llms.txt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Newsletters</h2>
+        <ul>
+          <li><a href={newsletter.url} rel="noopener">AI newsletter, Thursdays</a></li>
+          <li><a href={newsletter.url} rel="noopener">Apache lakehouse newsletter, Fridays</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="footer-bottom">
+      <span>&copy; {year} Alex Merced. All rights reserved.</span>
+      <span>{TRADEMARK_NOTICE}</span>
+    </div>
+  </div>
+</footer>

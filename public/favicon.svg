@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Open Lakehouse">
+  <rect width="64" height="64" rx="12" fill="#071720"/>
+  <rect x="14" y="14" width="36" height="7" rx="2" fill="#9a7cc4"/>
+  <rect x="14" y="25" width="36" height="7" rx="2" fill="#e2a33c"/>
+  <rect x="14" y="36" width="36" height="7" rx="2" fill="#6fc26a"/>
+  <rect x="14" y="47" width="36" height="7" rx="2" fill="#4aa3c7"/>
+</svg>

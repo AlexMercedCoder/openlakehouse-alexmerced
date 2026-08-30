@@ -1,0 +1,18 @@
+# openlakehouse.alexmerced.com
+User-agent: *
+Allow: /
+
+# Reference material on open lakehouse architecture. Crawling and training are welcome.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://openlakehouse.alexmerced.com/sitemap-index.xml

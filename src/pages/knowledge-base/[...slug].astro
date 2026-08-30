@@ -1,0 +1,162 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { TRADEMARK_NOTICE } from '../../data/network';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('kb');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry, entries } }));
+}
+
+const { entry, entries } = Astro.props;
+const { Content, headings } = await render(entry);
+
+const related = entry.data.related
+  .map((id: string) => entries.find((e: { id: string }) => e.id === id))
+  .filter(Boolean);
+
+const groupLabel = entry.data.kind === 'technology' ? 'Key technology' : 'Concept';
+const url = `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}`;
+
+const jsonLd = [
+  {
+    '@type': 'TechArticle',
+    '@id': `${url}#article`,
+    headline: entry.data.title,
+    description: entry.data.summary,
+    url,
+    inLanguage: 'en-US',
+    isPartOf: { '@id': 'https://openlakehouse.alexmerced.com/#website' },
+    author: { '@id': 'https://alexmerced.com/#alexmerced' },
+    keywords: entry.data.keywords.join(', '),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumbs`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://openlakehouse.alexmerced.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Knowledge base', item: 'https://openlakehouse.alexmerced.com/knowledge-base' },
+      { '@type': 'ListItem', position: 3, name: entry.data.title, item: url },
+    ],
+  },
+];
+---
+
+<Base
+  title={entry.data.title}
+  description={entry.data.summary}
+  keywords={entry.data.keywords}
+  jsonLd={jsonLd}
+  ogType="article"
+>
+  <article class="entry">
+    <header class="shell entry__head">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/knowledge-base">Knowledge base</a>
+      </nav>
+      <p class="eyebrow">{groupLabel}</p>
+      <h1>{entry.data.title}</h1>
+      <p class="entry__summary">{entry.data.summary}</p>
+    </header>
+
+    <div class="shell entry__grid">
+      <aside class="toc" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          {headings.filter((h: { depth: number }) => h.depth === 2).map((h: { slug: string; text: string }) => (
+            <li><a href={`#${h.slug}`}>{h.text}</a></li>
+          ))}
+        </ol>
+      </aside>
+
+      <div class="prose">
+        <Content />
+
+        {entry.data.sources.length > 0 && (
+          <section class="sources">
+            <h2 id="sources">Primary sources</h2>
+            <p>
+              Documentation and specifications move faster than any summary. Treat these as the
+              authority and this page as orientation.
+            </p>
+            <ul>
+              {entry.data.sources.map((source: { label: string; url: string; note: string }) => (
+                <li>
+                  <a href={source.url} rel="noopener">{source.label}</a>
+                  <span>{source.note}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {related.length > 0 && (
+          <section class="related">
+            <h2 id="related">Related entries</h2>
+            <ul>
+              {related.map((item: any) => (
+                <li>
+                  <a href={`/knowledge-base/${item.id}`}>{item.data.title}</a>
+                  <span>{item.data.summary}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {entry.data.apacheProject && <p class="trademark">{TRADEMARK_NOTICE}</p>}
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .entry__head { padding: 3rem 0 2rem; border-bottom: 1px solid var(--rule); max-width: 52rem; }
+  .crumbs { display: flex; gap: 0.55rem; font: 0.78rem var(--mono); color: var(--ink-faint); margin-bottom: 1.6rem; }
+  .crumbs a { text-decoration: none; border-bottom: 1px solid var(--rule); }
+  .crumbs a:hover { border-bottom-color: var(--ink); }
+  .entry__head h1 { margin: 0.4rem 0 1rem; font-size: clamp(2rem, 4vw, 3rem); }
+  .entry__summary { font-size: 1.12rem; color: var(--ink-soft); margin: 0; }
+
+  .entry__grid { display: grid; grid-template-columns: 15rem 1fr; gap: 4rem; padding: 3rem 0 4rem; align-items: start; }
+
+  .toc { position: sticky; top: 6rem; }
+  .toc h2 { font: 600 0.7rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 1rem; }
+  .toc ol { list-style: none; margin: 0; padding: 0 0 0 1rem; border-left: 1px solid var(--rule); display: grid; gap: 0.65rem; }
+  .toc a { font-size: 0.9rem; text-decoration: none; color: var(--ink-soft); }
+  .toc a:hover { color: var(--ink); text-decoration: underline; }
+
+  .prose { max-width: 44rem; }
+  .prose :global(h2) { font-size: 1.6rem; margin: 2.6rem 0 0.9rem; scroll-margin-top: 6rem; }
+  .prose :global(h2:first-child) { margin-top: 0; }
+  .prose :global(h3) { font-size: 1.15rem; margin: 1.8rem 0 0.6rem; }
+  .prose :global(p) { margin: 0 0 1.15em; }
+  .prose :global(ul), .prose :global(ol) { margin: 0 0 1.4em; padding-left: 1.3rem; display: grid; gap: 0.6rem; }
+  .prose :global(li) { line-height: 1.6; }
+  .prose :global(blockquote) {
+    margin: 1.8rem 0; padding: 1.1rem 1.4rem;
+    background: var(--surface-raised); border-left: 4px solid var(--catalog);
+    font-family: var(--display); font-size: 1.05rem;
+  }
+  .prose :global(blockquote p:last-child) { margin-bottom: 0; }
+  .prose :global(a) { color: var(--depth-700); text-underline-offset: 3px; }
+  .prose :global(code) { font: 0.88em var(--mono); background: #e9e4d9; padding: 0.12em 0.4em; border-radius: 2px; }
+  .prose :global(strong) { font-weight: 650; }
+
+  .sources, .related { margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--rule); }
+  .sources ul, .related ul { list-style: none; padding: 0; display: grid; gap: 0; }
+  .sources li, .related li { display: grid; gap: 0.3rem; padding: 1rem 0; border-bottom: 1px solid var(--rule); }
+  .sources a, .related a { font-weight: 650; text-decoration: none; width: max-content; max-width: 100%; }
+  .sources a:hover, .related a:hover { text-decoration: underline; }
+  .sources span, .related span { color: var(--ink-soft); font-size: 0.92rem; }
+
+  .trademark { margin-top: 2.5rem; font-size: 0.8rem; color: var(--ink-faint); line-height: 1.6; }
+
+  @media (max-width: 900px) {
+    .entry__grid { grid-template-columns: 1fr; gap: 2rem; }
+    .toc { position: static; border: 1px solid var(--rule); padding: 1.25rem; background: var(--surface-raised); }
+    .toc ol { border-left: 0; padding-left: 0; }
+  }
+</style>
