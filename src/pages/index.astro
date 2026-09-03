@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import LakehouseDiagram from '../components/LakehouseDiagram.astro';
+import HomeFilmShowcase from '../components/HomeFilmShowcase.astro';
 import { dremioHighlights, channels } from '../data/work';
 
 const entries = await getCollection('kb');
@@ -39,6 +40,14 @@ const featured = dremioHighlights.slice(0, 3);
       </div>
     </div>
   </section>
+
+  <HomeFilmShowcase eyebrow="Featured music video" heading="The open lakehouse in motion" intro="A visual and musical walkthrough of the Iceberg architecture I write, teach, and build around." films={[{
+    title: 'The Iceberg Open Lakehouse',
+    description: 'Follow the stack from durable files through snapshots, catalogs, engines, governance, and agent-ready semantics.',
+    src: 'https://opendatalakehouse.com/the-iceberg-open-lakehouse.mp4',
+    poster: 'https://opendatalakehouse.com/the-iceberg-open-lakehouse-poster.jpg',
+    runtime: '7:50',
+  }]} />
 
   <section class="shell band">
     <div class="band__head">
