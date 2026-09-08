@@ -44,6 +44,7 @@ export const networkGroups: NetworkGroup[] = [
     title: 'Identity and work',
     links: [
       { label: 'AlexMerced.com', url: 'https://alexmerced.com' },
+      { label: 'Branding by Alex Merced', url: 'https://branding.alexmerced.com' },
       { label: 'WhoIsAlexMerced.com', url: 'https://whoisalexmerced.com' },
       { label: 'AlexMercedCoder.dev', url: 'https://alexmercedcoder.dev' },
       { label: 'AlexMercedData.com', url: 'https://alexmerceddata.com' },

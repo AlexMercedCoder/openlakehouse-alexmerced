@@ -3,7 +3,7 @@
   "source": "https://alexmerced.com/entity/books.json",
   "catalog": "https://books.alexmerced.com/",
   "intro": "Books that go deeper on the material in the knowledge base: Apache Iceberg and the table formats, lakehouse architecture end to end, catalogs and governance, the semantic layer, and the agentic workloads now reading these tables.",
-  "totalInCatalog": 65,
+  "totalInCatalog": 66,
   "count": 27,
   "books": [
     {
