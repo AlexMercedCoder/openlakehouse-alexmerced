@@ -5,6 +5,13 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Astro emits /sitemap-index.xml; /sitemap.xml used to fall through to the 404 page.
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/sitemap-index.xml"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/llms.txt"
   [headers.values]
