@@ -34,7 +34,7 @@ export const connectLinks: NetworkLink[] = [
   { label: 'Twitter/X', url: 'https://x.com/AMdatalakehouse' },
   { label: 'YouTube, data and AI', url: 'https://www.youtube.com/@alexmerceddata' },
   { label: 'YouTube, tech', url: 'https://www.youtube.com/@AlexMercedCoder' },
-  { label: 'Email', url: 'mailto:dev@alexmerced.com' },
+  { label: 'Email', url: 'mailto:contact@alexmerced.com' },
 ];
 
 export const TRADEMARK_NOTICE =
