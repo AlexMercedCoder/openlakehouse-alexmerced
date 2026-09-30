@@ -13,7 +13,7 @@ export const GET: APIRoute = async () => {
   const technologies = entries.filter((e) => e.data.kind === 'technology');
 
   const line = (entry: (typeof entries)[number]) =>
-    `- [${entry.data.title}](${SITE}/knowledge-base/${entry.id}): ${entry.data.summary} Definition: ${entry.data.definition.url}`;
+    `- [${entry.data.title}](${SITE}/knowledge-base/${entry.id}/): ${entry.data.summary} Definition: ${entry.data.definition.url}`;
 
   const body = `# Alex Merced, Open Lakehouse advocate
 
@@ -34,9 +34,9 @@ ${technologies.map(line).join('\n')}
 ## Site pages
 
 - [Home](${SITE}/): profile page for Alex Merced's open lakehouse work, with the layered model of the lakehouse.
-- [Knowledge base index](${SITE}/knowledge-base): all ${entries.length} entries, each Alex's perspective with a link to the neutral definition.
-- [Where to find my work](${SITE}/work): articles, video, community, and podcast.
-- [Books](${SITE}/books): ${bookData.count} lakehouse and data titles, part of a catalog of ${bookData.totalInCatalog}.
+- [Knowledge base index](${SITE}/knowledge-base/): all ${entries.length} entries, each Alex's perspective with a link to the neutral definition.
+- [Where to find my work](${SITE}/work/): articles, video, community, and podcast.
+- [Books](${SITE}/books/): ${bookData.count} lakehouse and data titles, part of a catalog of ${bookData.totalInCatalog}.
 
 ## Selected writing
 

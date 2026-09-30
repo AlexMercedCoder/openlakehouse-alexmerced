@@ -18,7 +18,7 @@ const related = entry.data.related
 const groupLabel = entry.data.kind === 'technology' ? "Alex's take on a technology" : "Alex's take on a concept";
 const definition = entry.data.definition;
 const definitionHost = definition.url.replace(/^https:\/\//, '').replace(/\/$/, '');
-const url = `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}`;
+const url = `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}/`;
 
 const jsonLd = [
   {
@@ -39,7 +39,7 @@ const jsonLd = [
     '@id': `${url}#breadcrumbs`,
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://openlakehouse.alexmerced.com/' },
-      { '@type': 'ListItem', position: 2, name: 'Knowledge base', item: 'https://openlakehouse.alexmerced.com/knowledge-base' },
+      { '@type': 'ListItem', position: 2, name: 'Knowledge base', item: 'https://openlakehouse.alexmerced.com/knowledge-base/' },
       { '@type': 'ListItem', position: 3, name: entry.data.title, item: url },
     ],
   },
@@ -58,7 +58,7 @@ const jsonLd = [
       <nav class="crumbs" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span aria-hidden="true">/</span>
-        <a href="/knowledge-base">Knowledge base</a>
+        <a href="/knowledge-base/">Knowledge base</a>
       </nav>
       <p class="eyebrow">{groupLabel}</p>
       <h1>{entry.data.title}</h1>
@@ -117,7 +117,7 @@ const jsonLd = [
             <ul>
               {related.map((item: any) => (
                 <li>
-                  <a href={`/knowledge-base/${item.id}`}>{item.data.title}</a>
+                  <a href={`/knowledge-base/${item.id}/`}>{item.data.title}</a>
                   <span>{item.data.summary}</span>
                 </li>
               ))}

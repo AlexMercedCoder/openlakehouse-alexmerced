@@ -3,10 +3,10 @@ import MobileNav from './MobileNav.astro';
 
 const { path = '' } = Astro.props;
 const nav = [
-  { label: 'Knowledge base', href: '/knowledge-base' },
-  { label: 'Technologies', href: '/knowledge-base#technologies' },
-  { label: 'My work', href: '/work' },
-  { label: 'Books', href: '/books' },
+  { label: 'Knowledge base', href: '/knowledge-base/' },
+  { label: 'Technologies', href: '/knowledge-base/#technologies' },
+  { label: 'My work', href: '/work/' },
+  { label: 'Books', href: '/books/' },
 ];
 const isCurrent = (href: string) => path === href || (href !== '/' && path.startsWith(href) && !href.includes('#'));
 ---

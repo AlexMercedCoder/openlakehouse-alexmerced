@@ -20,7 +20,7 @@ export interface Props {
 const { title, description, jsonLd = [], keywords = [], ogType = 'website' } = Astro.props;
 
 const SITE = 'https://openlakehouse.alexmerced.com';
-const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', SITE).href;
+const canonical = new URL(Astro.url.pathname.replace(/\/?$/, '/'), SITE).href;
 const fullTitle = Astro.url.pathname === '/' ? title : `${title} | Alex Merced, Open Lakehouse advocate`;
 
 const baseGraph = [

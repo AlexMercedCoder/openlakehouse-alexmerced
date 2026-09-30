@@ -16,7 +16,7 @@ const knowledgeBase = entries
     apacheProject: entry.data.apacheProject ?? false,
     related: entry.data.related ?? [],
     sources: (entry.data.sources ?? []).map((s) => ({ label: s.label, url: s.url })),
-    url: `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}`,
+    url: `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}/`,
     // Neutral definition on opendatalakehouse.com; this entry is Alex's perspective.
     definition: entry.data.definition.url,
   }));

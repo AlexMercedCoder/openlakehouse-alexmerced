@@ -11,7 +11,7 @@ const jsonLd = [
     '@type': 'CollectionPage',
     '@id': 'https://openlakehouse.alexmerced.com/knowledge-base#collection',
     name: "Alex Merced's open lakehouse notes",
-    url: 'https://openlakehouse.alexmerced.com/knowledge-base',
+    url: 'https://openlakehouse.alexmerced.com/knowledge-base/',
     description: `Alex Merced's perspective on open lakehouse concepts and technologies, each linked to its neutral definition on OpenDataLakehouse.com. ${entries.length} entries.`,
     isPartOf: { '@id': 'https://openlakehouse.alexmerced.com/#website' },
     inLanguage: 'en-US',
@@ -23,7 +23,7 @@ const jsonLd = [
         '@type': 'ListItem',
         position: index + 1,
         name: entry.data.title,
-        url: `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}`,
+        url: `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}/`,
       })),
     },
   },
@@ -55,7 +55,7 @@ const jsonLd = [
     <ol class="kb-list">
       {concepts.map((entry, index) => (
         <li>
-          <a href={`/knowledge-base/${entry.id}`}>
+          <a href={`/knowledge-base/${entry.id}/`}>
             <span class="kb-list__num">{String(index + 1).padStart(2, '0')}</span>
             <span class="kb-list__body">
               <strong>{entry.data.title}</strong>
@@ -74,7 +74,7 @@ const jsonLd = [
     </div>
     <div class="kb-cards">
       {technologies.map((entry) => (
-        <a class="kb-card" href={`/knowledge-base/${entry.id}`}>
+        <a class="kb-card" href={`/knowledge-base/${entry.id}/`}>
           <strong>{entry.data.title}</strong>
           <span>{entry.data.summary}</span>
           <em>Read the entry</em>

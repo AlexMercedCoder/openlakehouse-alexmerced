@@ -47,8 +47,8 @@ const jsonLd = [
           is the reference.
         </p>
         <div class="hero__actions">
-          <a class="button" href="/knowledge-base">Read the knowledge base</a>
-          <a class="button button--ghost" href="/work">Where to find my work</a>
+          <a class="button" href="/knowledge-base/">Read the knowledge base</a>
+          <a class="button button--ghost" href="/work/">Where to find my work</a>
         </div>
       </div>
       <div class="hero__figure">
@@ -81,7 +81,7 @@ const jsonLd = [
     <ol class="concept-strip">
       {concepts.slice(0, 6).map((entry, index) => (
         <li>
-          <a href={`/knowledge-base/${entry.id}`}>
+          <a href={`/knowledge-base/${entry.id}/`}>
             <span>{String(index + 1).padStart(2, '0')}</span>
             <strong>{entry.data.title}</strong>
             <em>{entry.data.summary}</em>
@@ -89,7 +89,7 @@ const jsonLd = [
         </li>
       ))}
     </ol>
-    <p class="band__more"><a href="/knowledge-base#concepts">All {concepts.length} concept entries</a></p>
+    <p class="band__more"><a href="/knowledge-base/#concepts">All {concepts.length} concept entries</a></p>
   </section>
 
   <section class="tech">
@@ -103,7 +103,7 @@ const jsonLd = [
       </div>
       <div class="tech__grid">
         {technologies.map((entry) => (
-          <a class="tech__card" href={`/knowledge-base/${entry.id}`}>
+          <a class="tech__card" href={`/knowledge-base/${entry.id}/`}>
             <strong>{entry.data.title}</strong>
             <span>{entry.data.summary}</span>
           </a>
@@ -128,7 +128,7 @@ const jsonLd = [
         </li>
       ))}
     </ul>
-    <p class="band__more"><a href="/work">Everything else, including video and community</a></p>
+    <p class="band__more"><a href="/work/">Everything else, including video and community</a></p>
   </section>
 
   <section class="shell channels">
