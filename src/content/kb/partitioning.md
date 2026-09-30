@@ -2,6 +2,13 @@
 title: Partitioning
 summary: How table data is physically grouped so a query can skip whole sections of it, and why hiding the scheme matters.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/kb/hidden-partitioning/"
+  label: "Hidden Partitioning"
+  match: closest
+  also:
+    - url: "https://opendatalakehouse.com/kb/partition-spec/"
+      label: "Partition Spec"
 order: 8
 keywords: ["partitioning", "hidden partitioning", "partition evolution", "partition pruning", "data skipping"]
 related: ["table-format", "file-format", "apache-iceberg"]

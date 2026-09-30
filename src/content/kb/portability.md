@@ -2,6 +2,13 @@
 title: Portability and lock-in
 summary: What it would actually cost to change each component, and why the answer is usually discovered too late.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/kb/format-interoperability/"
+  label: "Format Interoperability"
+  match: closest
+  also:
+    - url: "https://opendatalakehouse.com/principles/"
+      label: "Principles of an open lakehouse"
 order: 12
 keywords: ["vendor lock-in", "data portability", "migration cost", "exit strategy", "interoperability"]
 related: ["kinds-of-open", "catalog", "query-engines"]

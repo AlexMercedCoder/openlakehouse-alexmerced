@@ -2,6 +2,13 @@
 title: Catalog
 summary: The service that resolves table names, performs the atomic commit, enforces access, and hands out scoped credentials.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/kb/iceberg-catalog/"
+  label: "Iceberg Catalog"
+  match: exact
+  also:
+    - url: "https://opendatalakehouse.com/compare/catalogs/"
+      label: "Comparing lakehouse catalogs"
 order: 5
 keywords: ["data catalog", "Iceberg REST catalog", "credential vending", "access control", "multi-engine"]
 related: ["apache-polaris", "table-format", "object-storage"]

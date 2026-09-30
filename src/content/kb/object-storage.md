@@ -2,6 +2,10 @@
 title: Object storage
 summary: The durable, cheap byte store at the bottom of the stack, and the constraints it imposes on everything above it.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/kb/object-storage/"
+  label: "Object Storage"
+  match: exact
 order: 2
 keywords: ["object storage", "S3", "data lake storage", "immutable files", "storage layer"]
 related: ["what-is-an-open-lakehouse", "file-format", "catalog"]

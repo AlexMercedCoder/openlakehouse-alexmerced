@@ -2,6 +2,13 @@
 title: AI and the lakehouse
 summary: Why AI workloads make the same architectural properties matter more, and what they add on top.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/kb/ai-agents/"
+  label: "AI Agents"
+  match: closest
+  also:
+    - url: "https://opendatalakehouse.com/kb/agentic-analytics/"
+      label: "Agentic Analytics"
 order: 13
 keywords: ["AI ready data", "agentic analytics", "RAG", "AI agents data access", "semantic layer for AI"]
 related: ["semantic-layer", "catalog", "apache-ossie"]

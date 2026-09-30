@@ -2,6 +2,15 @@
 title: Table maintenance
 summary: Compaction, snapshot expiration, and orphan cleanup, and what happens to a table when nobody owns them.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/kb/table-maintenance/"
+  label: "Table Maintenance"
+  match: exact
+  also:
+    - url: "https://opendatalakehouse.com/kb/compaction/"
+      label: "Compaction"
+    - url: "https://opendatalakehouse.com/kb/expire-snapshots/"
+      label: "Expire Snapshots"
 order: 10
 keywords: ["compaction", "small files problem", "snapshot expiration", "orphan files", "table maintenance"]
 related: ["table-format", "partitioning", "acid-and-time-travel"]

@@ -9,11 +9,26 @@ const entries = await getCollection('kb');
 const concepts = entries.filter((e) => e.data.kind === 'concept').sort((a, b) => a.data.order - b.data.order);
 const technologies = entries.filter((e) => e.data.kind === 'technology').sort((a, b) => a.data.order - b.data.order);
 const featured = dremioHighlights.slice(0, 3);
+
+// D4: this site is a personal facet of Alex Merced. The Person node itself comes
+// from network/network-head.html; the ProfilePage only references it by @id.
+const jsonLd = [
+  {
+    '@type': 'ProfilePage',
+    '@id': 'https://openlakehouse.alexmerced.com/#profilepage',
+    url: 'https://openlakehouse.alexmerced.com/',
+    name: 'Alex Merced, Open Lakehouse advocate',
+    inLanguage: 'en-US',
+    isPartOf: { '@id': 'https://openlakehouse.alexmerced.com/#website' },
+    mainEntity: { '@id': 'https://alexmerced.com/#alexmerced' },
+  },
+];
 ---
 
 <Base
   title="Alex Merced, Open Lakehouse advocate"
-  description="Reference material on open lakehouse architecture from Alex Merced: object storage, file and table formats, catalogs, semantic layers, and the engines that read them. Includes a knowledge base covering Apache Arrow, Parquet, Iceberg, Polaris, and Ossie."
+  description="Alex Merced's take on the open lakehouse: why open formats, catalogs, and semantic layers matter, where to find his work and books, and his notes on Apache Arrow, Parquet, Iceberg, Polaris, and Ossie."
+  jsonLd={jsonLd}
   keywords={['open lakehouse', 'data lakehouse', 'Apache Iceberg', 'Apache Polaris', 'Apache Arrow', 'Apache Parquet', 'Apache Ossie', 'table format', 'data catalog', 'semantic layer', 'Alex Merced']}
 >
   <section class="hero">
@@ -27,8 +42,9 @@ const featured = dremioHighlights.slice(0, 3);
           No vendor sits between you and your own data.
         </p>
         <p class="hero__lede">
-          This site is where I collect the reference material: the vocabulary, the layers, and the
-          projects that carry them.
+          This site is my corner of that world: how I think about each layer, where to find my work,
+          and my books. For neutral definitions, <a href="https://opendatalakehouse.com/">OpenDataLakehouse.com</a>
+          is the reference.
         </p>
         <div class="hero__actions">
           <a class="button" href="/knowledge-base">Read the knowledge base</a>

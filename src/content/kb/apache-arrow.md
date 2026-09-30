@@ -2,6 +2,10 @@
 title: Apache Arrow
 summary: A standard way to lay out tabular data in memory so processes and languages can share it without converting it first.
 kind: technology
+definition:
+  url: "https://opendatalakehouse.com/kb/apache-arrow/"
+  label: "Apache Arrow"
+  match: exact
 order: 2
 apacheProject: true
 keywords: ["Apache Arrow", "columnar memory format", "Arrow Flight", "ADBC", "zero copy", "interchange"]

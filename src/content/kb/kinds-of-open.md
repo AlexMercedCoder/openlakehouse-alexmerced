@@ -2,6 +2,13 @@
 title: The four kinds of open
 summary: Open source, open formats, open interfaces, and open governance are separate claims, and conflating them is how lock-in survives.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/principles/"
+  label: "Principles of an open lakehouse"
+  match: closest
+  also:
+    - url: "https://opendatalakehouse.com/kb/open-table-formats/"
+      label: "Open Table Formats"
 order: 11
 keywords: ["open source", "open format", "open standard", "open governance", "vendor lock-in", "portability"]
 related: ["what-is-an-open-lakehouse", "catalog", "apache-polaris"]

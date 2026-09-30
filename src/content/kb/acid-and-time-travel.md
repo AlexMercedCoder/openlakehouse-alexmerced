@@ -2,6 +2,13 @@
 title: ACID and time travel
 summary: How a lakehouse gets safe concurrent writes and a readable past, using an atomic pointer swap rather than a lock.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/kb/acid-transactions/"
+  label: "ACID Transactions"
+  match: exact
+  also:
+    - url: "https://opendatalakehouse.com/kb/time-travel/"
+      label: "Time Travel"
 order: 9
 keywords: ["ACID transactions", "snapshot isolation", "time travel", "optimistic concurrency", "rollback"]
 related: ["table-format", "catalog", "maintenance"]

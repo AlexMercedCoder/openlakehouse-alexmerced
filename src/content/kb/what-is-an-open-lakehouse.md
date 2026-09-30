@@ -2,6 +2,10 @@
 title: What is an open lakehouse
 summary: A data architecture that keeps analytical data in open formats on object storage you control, readable by any compliant engine.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/what-is-an-open-lakehouse/"
+  label: "What is an open lakehouse?"
+  match: exact
 order: 1
 keywords: ["open lakehouse", "data lakehouse", "lakehouse architecture", "open table format", "vendor lock-in"]
 related: ["object-storage", "table-format", "catalog"]

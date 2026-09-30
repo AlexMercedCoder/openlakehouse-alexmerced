@@ -10,9 +10,9 @@ const jsonLd = [
   {
     '@type': 'CollectionPage',
     '@id': 'https://openlakehouse.alexmerced.com/knowledge-base#collection',
-    name: 'Open lakehouse knowledge base',
+    name: "Alex Merced's open lakehouse notes",
     url: 'https://openlakehouse.alexmerced.com/knowledge-base',
-    description: `Reference entries covering open lakehouse terminology, architecture, and the key technologies. ${entries.length} entries.`,
+    description: `Alex Merced's perspective on open lakehouse concepts and technologies, each linked to its neutral definition on OpenDataLakehouse.com. ${entries.length} entries.`,
     isPartOf: { '@id': 'https://openlakehouse.alexmerced.com/#website' },
     inLanguage: 'en-US',
     author: { '@id': 'https://alexmerced.com/#alexmerced' },
@@ -32,17 +32,18 @@ const jsonLd = [
 
 <Base
   title="Knowledge base"
-  description="Open lakehouse terminology and architecture explained: object storage, file and table formats, catalogs, semantic layers, engines, and the key Apache projects behind them."
+  description="Alex Merced's take on open lakehouse concepts and technologies, from object storage to semantic layers, each linked to its neutral definition on OpenDataLakehouse.com."
   keywords={['open lakehouse', 'data lakehouse terminology', 'Apache Iceberg', 'Apache Polaris', 'Apache Arrow', 'Apache Parquet', 'Apache Ossie', 'table format', 'catalog']}
   jsonLd={jsonLd}
 >
   <section class="kb-hero shell">
     <p class="eyebrow">Knowledge base</p>
-    <h1>The vocabulary of the open lakehouse.</h1>
+    <h1>How I explain the open lakehouse.</h1>
     <p class="kb-hero__lede">
-      Each entry covers one idea: what it is, the problem it solves, where it stops, and which
-      primary sources to read next. Start at the top if the whole architecture is new to you, or go
-      straight to a technology if you already know where you are.
+      Each entry is my take on one idea: the problem it solves, where it stops, and which primary
+      sources to read next. For the neutral definitions, go to the
+      <a href="https://opendatalakehouse.com/glossary/">OpenDataLakehouse.com glossary</a>; every
+      entry here links to its matching page there.
     </p>
   </section>
 

@@ -2,6 +2,10 @@
 title: Apache Ossie
 summary: An incubating project defining a vendor-neutral standard for semantic metadata, so metrics are defined once and used everywhere.
 kind: technology
+definition:
+  url: "https://opendatalakehouse.com/kb/semantic-layer/"
+  label: "Semantic Layer"
+  match: closest
 order: 5
 apacheProject: true
 keywords: ["Apache Ossie", "semantic metadata", "semantic layer standard", "metric definitions", "metric drift"]

@@ -15,7 +15,9 @@ const related = entry.data.related
   .map((id: string) => entries.find((e: { id: string }) => e.id === id))
   .filter(Boolean);
 
-const groupLabel = entry.data.kind === 'technology' ? 'Key technology' : 'Concept';
+const groupLabel = entry.data.kind === 'technology' ? "Alex's take on a technology" : "Alex's take on a concept";
+const definition = entry.data.definition;
+const definitionHost = definition.url.replace(/^https:\/\//, '').replace(/\/$/, '');
 const url = `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}`;
 
 const jsonLd = [
@@ -29,6 +31,8 @@ const jsonLd = [
     isPartOf: { '@id': 'https://openlakehouse.alexmerced.com/#website' },
     author: { '@id': 'https://alexmerced.com/#alexmerced' },
     keywords: entry.data.keywords.join(', '),
+    // The neutral definition this perspective piece builds on.
+    isBasedOn: definition.url,
   },
   {
     '@type': 'BreadcrumbList',
@@ -59,6 +63,21 @@ const jsonLd = [
       <p class="eyebrow">{groupLabel}</p>
       <h1>{entry.data.title}</h1>
       <p class="entry__summary">{entry.data.summary}</p>
+      <aside class="definition-link" aria-label="Definition">
+        <p>
+          <strong>Definition:</strong> see <a href={definition.url} rel="noopener">{definitionHost}</a>
+          {definition.match === 'closest' && <span> (the closest entry; there is no page for this exact term)</span>}.
+          {definition.also.length > 0 && (
+            <span> Also: {definition.also.map((item: { url: string; label: string }, i: number) => (
+              <>{i > 0 && ', '}<a href={item.url} rel="noopener">{item.label}</a></>
+            ))}.</span>
+          )}
+        </p>
+        <p class="definition-link__note">
+          OpenDataLakehouse.com is the vendor-neutral reference. What follows is my perspective: how I
+          explain this idea and where I think it matters.
+        </p>
+      </aside>
     </header>
 
     <div class="shell entry__grid">
@@ -119,6 +138,13 @@ const jsonLd = [
   .crumbs a:hover { border-bottom-color: var(--ink); }
   .entry__head h1 { margin: 0.4rem 0 1rem; font-size: clamp(2rem, 4vw, 3rem); }
   .entry__summary { font-size: 1.12rem; color: var(--ink-soft); margin: 0; }
+  .definition-link {
+    margin-top: 1.5rem; padding: 1rem 1.25rem;
+    background: var(--surface-raised); border: 1px solid var(--rule); border-left: 4px solid var(--catalog);
+  }
+  .definition-link p { margin: 0; }
+  .definition-link a { color: var(--depth-700); font-weight: 650; text-underline-offset: 3px; }
+  .definition-link__note { margin-top: 0.5rem !important; font-size: 0.92rem; color: var(--ink-soft); }
 
   .entry__grid { display: grid; grid-template-columns: 15rem 1fr; gap: 4rem; padding: 3rem 0 4rem; align-items: start; }
 

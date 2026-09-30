@@ -2,6 +2,10 @@
 title: Semantic layer
 summary: Written definitions of what the data means, so people and machines compute the same metric the same way.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/kb/semantic-layer/"
+  label: "Semantic Layer"
+  match: exact
 order: 6
 keywords: ["semantic layer", "metrics layer", "metric definitions", "governed metrics", "data modeling"]
 related: ["apache-ossie", "catalog", "query-engines"]

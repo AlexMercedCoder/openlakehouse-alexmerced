@@ -2,6 +2,10 @@
 title: File format
 summary: How records are arranged inside a single file, which decides how much of it a query has to read.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/kb/file-format/"
+  label: "File Format"
+  match: exact
 order: 3
 keywords: ["file format", "columnar storage", "row group", "predicate pushdown", "compression"]
 related: ["apache-parquet", "object-storage", "table-format"]

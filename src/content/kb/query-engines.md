@@ -2,6 +2,10 @@
 title: Query engines
 summary: The compute that reads the stack, kept separate from storage so you can run several and replace any of them.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/kb/compute-engine/"
+  label: "Compute Engine"
+  match: exact
 order: 7
 keywords: ["query engine", "compute storage separation", "multi-engine", "federation", "Dremio", "Spark", "Trino"]
 related: ["what-is-an-open-lakehouse", "catalog", "apache-arrow"]

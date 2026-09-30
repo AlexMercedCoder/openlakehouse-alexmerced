@@ -17,6 +17,8 @@ const knowledgeBase = entries
     related: entry.data.related ?? [],
     sources: (entry.data.sources ?? []).map((s) => ({ label: s.label, url: s.url })),
     url: `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}`,
+    // Neutral definition on opendatalakehouse.com; this entry is Alex's perspective.
+    definition: entry.data.definition.url,
   }));
 
 const work = {
@@ -61,7 +63,7 @@ const books = {
       {
         name: 'list_knowledge_base',
         description:
-          'List every entry in the Open Lakehouse knowledge base on openlakehouse.alexmerced.com. Returns concept entries (architecture and vocabulary) and technology entries (Apache Parquet, Arrow, Iceberg, Polaris, Ossie) with slugs, summaries, and URLs.',
+          "List every entry in Alex Merced's open lakehouse knowledge base on openlakehouse.alexmerced.com. Entries are Alex's perspective, not neutral definitions: each includes a definition URL on opendatalakehouse.com for that. Returns concept entries and technology entries (Apache Parquet, Arrow, Iceberg, Polaris, Ossie) with slugs, summaries, and URLs.",
         inputSchema: {
           type: 'object',
           properties: {

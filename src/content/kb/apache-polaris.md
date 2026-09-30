@@ -2,6 +2,10 @@
 title: Apache Polaris
 summary: An open catalog for Iceberg tables that resolves names, enforces access, and vends scoped credentials.
 kind: technology
+definition:
+  url: "https://opendatalakehouse.com/kb/polaris-catalog/"
+  label: "Polaris Catalog"
+  match: exact
 order: 4
 apacheProject: true
 keywords: ["Apache Polaris", "Iceberg REST catalog", "credential vending", "RBAC", "catalog federation", "multi-engine"]

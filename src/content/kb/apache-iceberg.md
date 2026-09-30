@@ -2,6 +2,10 @@
 title: Apache Iceberg
 summary: The table format that turns files in object storage into a real table, with atomic commits, schema evolution, and history.
 kind: technology
+definition:
+  url: "https://opendatalakehouse.com/kb/apache-iceberg/"
+  label: "Apache Iceberg"
+  match: exact
 order: 3
 apacheProject: true
 keywords: ["Apache Iceberg", "open table format", "snapshots", "time travel", "hidden partitioning", "REST catalog"]

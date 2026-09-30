@@ -15,6 +15,17 @@ const kb = defineCollection({
     /** Primary sources, shown at the foot of every entry. */
     sources: z.array(z.object({ label: z.string(), url: z.string().url(), note: z.string() })).default([]),
     related: z.array(z.string()).default([]),
+    /**
+     * D4: the neutral definition lives on opendatalakehouse.com. Every entry links to it
+     * near the top; this page is Alex's perspective. match is "closest" when ODL has no
+     * page for this exact term.
+     */
+    definition: z.object({
+      url: z.string().url(),
+      label: z.string(),
+      match: z.enum(['exact', 'closest']),
+      also: z.array(z.object({ url: z.string().url(), label: z.string() })).default([]),
+    }),
     /** Set on technology entries so the page can show the trademark notice. */
     apacheProject: z.boolean().default(false),
   }),

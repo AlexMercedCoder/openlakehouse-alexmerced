@@ -2,6 +2,13 @@
 title: Table format
 summary: The metadata layer that turns a collection of files into a table with atomic commits, schema evolution, and history.
 kind: concept
+definition:
+  url: "https://opendatalakehouse.com/kb/table-format/"
+  label: "Table Format"
+  match: exact
+  also:
+    - url: "https://opendatalakehouse.com/compare/table-formats/"
+      label: "Iceberg vs Delta Lake vs Hudi vs Paimon"
 order: 4
 keywords: ["table format", "ACID", "snapshot isolation", "time travel", "schema evolution", "metadata"]
 related: ["apache-iceberg", "file-format", "catalog"]

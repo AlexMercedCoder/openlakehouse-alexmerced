@@ -2,7 +2,7 @@
 User-agent: *
 Allow: /
 
-# Reference material on open lakehouse architecture. Crawling and training are welcome.
+# Alex Merced's personal site on the open lakehouse. Crawling and training are welcome.
 User-agent: GPTBot
 Allow: /
 
