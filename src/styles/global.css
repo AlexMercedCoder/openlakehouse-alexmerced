@@ -120,6 +120,14 @@ a:focus-visible, button:focus-visible {
 .footer-cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; font-size: 0.88rem; }
 .footer-bottom { padding-top: 1.75rem; font: 0.72rem/1.7 var(--mono); color: #7d8f97; display: grid; gap: 0.75rem; }
 
+/* ---------- network CTA strip (links from network/network.json) ---------- */
+.cta-strip { background: var(--surface-raised); border-top: 1px solid var(--rule); padding: 2.25rem 0; margin-top: 5rem; }
+.cta-strip__inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem 2rem; }
+.cta-strip h2 { margin: 0; font-size: 1.5rem; }
+.cta-strip ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.cta-strip .button--ghost { color: var(--depth-700); }
+.cta-strip .button--ghost:hover { background: rgba(16,32,42,.06); }
+
 /* ---------- newsletter ---------- */
 .newsletter { background: var(--depth-800); color: #eef3f4; padding: 4rem 0; }
 .newsletter__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }

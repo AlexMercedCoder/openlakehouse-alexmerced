@@ -2,7 +2,8 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { dremioHighlights, channels, playlists, community } from '../data/work';
 import bookData from '../data/books.json';
-import { networkGroups, newsletter } from '../data/network';
+import { newsletter } from '../data/network';
+import network from '../../network/network.json';
 
 const SITE = 'https://openlakehouse.alexmerced.com';
 
@@ -12,28 +13,28 @@ export const GET: APIRoute = async () => {
   const technologies = entries.filter((e) => e.data.kind === 'technology');
 
   const line = (entry: (typeof entries)[number]) =>
-    `- [${entry.data.title}](${SITE}/knowledge-base/${entry.id}): ${entry.data.summary}`;
+    `- [${entry.data.title}](${SITE}/knowledge-base/${entry.id}): ${entry.data.summary} Definition: ${entry.data.definition.url}`;
 
   const body = `# Alex Merced, Open Lakehouse advocate
 
-> Reference material on open lakehouse architecture from Alex Merced, Head of Developer Relations at Dremio and co-author of Apache Iceberg: The Definitive Guide. The site covers the layers of the lakehouse stack, the open projects that implement them, and where to find the rest of the work.
+> A personal site of Alex Merced, Head of Developer Relations at Dremio and co-author of Apache Iceberg: The Definitive Guide. It collects his perspective on open lakehouse architecture, where to find his work, and his books. It is a profile of Alex, not a definitions reference.
 
-An open lakehouse keeps analytical data in open file and table formats on storage the owner controls, with a catalog that lets any compliant engine read and write it. This site defines the vocabulary layer by layer and covers the five projects that carry most of the weight: Apache Parquet, Apache Arrow, Apache Iceberg, Apache Polaris, and Apache Ossie.
+For vendor-neutral definitions of lakehouse terms, use OpenDataLakehouse.com (https://opendatalakehouse.com/glossary/). Every knowledge base entry below is Alex's take on the idea and names the matching OpenDataLakehouse.com page as its definition. The canonical facts about Alex himself live at https://alexmerced.com.
 
 The site is static, has no login, and every page listed here is public.
 
-## Knowledge base: concepts
+## Alex's take: concepts
 
 ${concepts.map(line).join('\n')}
 
-## Knowledge base: technologies
+## Alex's take: technologies
 
 ${technologies.map(line).join('\n')}
 
 ## Site pages
 
-- [Home](${SITE}/): the layered model of the lakehouse, with an entry point into each layer.
-- [Knowledge base index](${SITE}/knowledge-base): all ${entries.length} entries, concepts and technologies.
+- [Home](${SITE}/): profile page for Alex Merced's open lakehouse work, with the layered model of the lakehouse.
+- [Knowledge base index](${SITE}/knowledge-base): all ${entries.length} entries, each Alex's perspective with a link to the neutral definition.
 - [Where to find my work](${SITE}/work): articles, video, community, and podcast.
 - [Books](${SITE}/books): ${bookData.count} lakehouse and data titles, part of a catalog of ${bookData.totalInCatalog}.
 
@@ -69,19 +70,21 @@ ${newsletter.editions.map((edition) => `- ${edition.title}, every ${edition.day}
 
 ## The rest of the network
 
-${networkGroups
+${network.footer.groups
   .map(
     (group) =>
       `### ${group.title}\n\n${group.links
-        .map((link) => `- [${link.label}](${link.url})`)
+        .map((link) => `- [${link.title}](${link.url})`)
         .join('\n')}`,
   )
   .join('\n\n')}
 
+- [${network.footer.allSitesLabel}](${network.footer.allSitesUrl})
+
 ## Notes for agents
 
 - The site exposes read-only WebMCP tools in the browser: list_knowledge_base, search_knowledge_base, get_knowledge_base_entry, list_lakehouse_work, and list_lakehouse_books.
-- Structured data is published as JSON-LD on every page, including WebSite, Person, TechArticle, BreadcrumbList, CollectionPage, and Book nodes.
+- Structured data is published as JSON-LD on every page, including WebSite, Person, ProfilePage (home), TechArticle, BreadcrumbList, CollectionPage, and Book nodes. The Person node is https://alexmerced.com/#alexmerced.
 - Apache Iceberg, Apache Polaris, Apache Parquet, Apache Arrow, and Apache Ossie are trademarks of the Apache Software Foundation. This site is independent and is not affiliated with or endorsed by the ASF.
 `;
 
