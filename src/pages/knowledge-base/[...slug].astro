@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { TRADEMARK_NOTICE } from '../../data/network';
+import { fileDates } from '../../../scripts/content-dates.mjs';
 
 export async function getStaticPaths() {
   const entries = await getCollection('kb');
@@ -19,6 +20,8 @@ const groupLabel = entry.data.kind === 'technology' ? "Alex's take on a technolo
 const definition = entry.data.definition;
 const definitionHost = definition.url.replace(/^https:\/\//, '').replace(/\/$/, '');
 const url = `https://openlakehouse.alexmerced.com/knowledge-base/${entry.id}/`;
+const dates = fileDates([`src/content/kb/${entry.id}.md`]);
+const metaDescription = entry.data.description ?? entry.data.summary;
 
 const jsonLd = [
   {
@@ -28,6 +31,7 @@ const jsonLd = [
     description: entry.data.summary,
     url,
     inLanguage: 'en-US',
+    ...(dates.published ? { datePublished: dates.published, dateModified: dates.modified } : {}),
     isPartOf: { '@id': 'https://openlakehouse.alexmerced.com/#website' },
     author: { '@id': 'https://alexmerced.com/#alexmerced' },
     keywords: entry.data.keywords.join(', '),
@@ -48,7 +52,7 @@ const jsonLd = [
 
 <Base
   title={entry.data.title}
-  description={entry.data.summary}
+  description={metaDescription}
   keywords={entry.data.keywords}
   jsonLd={jsonLd}
   ogType="article"

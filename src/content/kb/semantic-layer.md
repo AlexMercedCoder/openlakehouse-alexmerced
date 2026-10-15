@@ -1,6 +1,7 @@
 ---
 title: Semantic layer
 summary: Written definitions of what the data means, so people and machines compute the same metric the same way.
+description: "A semantic layer records what each metric means, which table is authoritative, and how entities relate, so people and AI agents compute a metric the same way."
 kind: concept
 definition:
   url: "https://opendatalakehouse.com/kb/semantic-layer/"

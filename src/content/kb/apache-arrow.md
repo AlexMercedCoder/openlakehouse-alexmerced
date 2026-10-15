@@ -1,6 +1,7 @@
 ---
 title: Apache Arrow
 summary: A standard way to lay out tabular data in memory so processes and languages can share it without converting it first.
+description: "Apache Arrow is a standard in-memory layout for tabular data, so processes and languages share it without conversion. Not a database, file format, or engine."
 kind: technology
 definition:
   url: "https://opendatalakehouse.com/kb/apache-arrow/"

@@ -1,6 +1,7 @@
 ---
 title: Apache Polaris
 summary: An open catalog for Iceberg tables that resolves names, enforces access, and vends scoped credentials.
+description: "Apache Polaris is an open catalog for Iceberg tables using the Iceberg REST protocol. It resolves names, enforces access, and vends scoped credentials."
 kind: technology
 definition:
   url: "https://opendatalakehouse.com/kb/polaris-catalog/"

@@ -1,6 +1,7 @@
 ---
 title: File format
 summary: How records are arranged inside a single file, which decides how much of it a query has to read.
+description: "A file format decides how records sit inside one file. Lakehouse formats are columnar, which sets how much of a file a query reads and how well it compresses."
 kind: concept
 definition:
   url: "https://opendatalakehouse.com/kb/file-format/"

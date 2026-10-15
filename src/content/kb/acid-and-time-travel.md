@@ -1,6 +1,7 @@
 ---
 title: ACID and time travel
 summary: How a lakehouse gets safe concurrent writes and a readable past, using an atomic pointer swap rather than a lock.
+description: "How a lakehouse table gets atomic commits, consistent reads, and a readable history without a database server: new files, new metadata, then one pointer swap."
 kind: concept
 definition:
   url: "https://opendatalakehouse.com/kb/acid-transactions/"

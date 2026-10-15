@@ -7,6 +7,8 @@ const kb = defineCollection({
     title: z.string(),
     /** One sentence. Used as the meta description and the card blurb. */
     summary: z.string(),
+    /** Meta description, 140 to 160 characters. Falls back to summary when absent. */
+    description: z.string().optional(),
     /** concept entries define the vocabulary; technology entries cover a project. */
     kind: z.enum(['concept', 'technology']),
     /** Position within its group on the index. */

@@ -1,6 +1,7 @@
 ---
 title: AI and the lakehouse
 summary: Why AI workloads make the same architectural properties matter more, and what they add on top.
+description: "AI workloads did not change lakehouse architecture. They made open formats, a real catalog, and engine independence matter more, and exposed the semantic gap."
 kind: concept
 definition:
   url: "https://opendatalakehouse.com/kb/ai-agents/"

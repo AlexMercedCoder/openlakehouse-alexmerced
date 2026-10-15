@@ -1,6 +1,7 @@
 ---
 title: Table maintenance
 summary: Compaction, snapshot expiration, and orphan cleanup, and what happens to a table when nobody owns them.
+description: "Lakehouse table maintenance: compaction for the small files problem, snapshot expiration, orphan cleanup, manifest rewriting, and what breaks when skipped."
 kind: concept
 definition:
   url: "https://opendatalakehouse.com/kb/table-maintenance/"

@@ -1,6 +1,7 @@
 ---
 title: Partitioning
 summary: How table data is physically grouped so a query can skip whole sections of it, and why hiding the scheme matters.
+description: "Partitioning groups table files so a query can skip whole sections. Why directory partitioning causes problems, and why hiding the scheme from users matters."
 kind: concept
 definition:
   url: "https://opendatalakehouse.com/kb/hidden-partitioning/"

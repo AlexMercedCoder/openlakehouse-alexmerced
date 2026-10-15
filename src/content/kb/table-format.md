@@ -1,6 +1,7 @@
 ---
 title: Table format
 summary: The metadata layer that turns a collection of files into a table with atomic commits, schema evolution, and history.
+description: "A table format is metadata that turns files in object storage into a table with atomic commits, schema evolution, and history. The data stays in open files."
 kind: concept
 definition:
   url: "https://opendatalakehouse.com/kb/table-format/"

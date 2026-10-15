@@ -1,6 +1,7 @@
 ---
 title: Portability and lock-in
 summary: What it would actually cost to change each component, and why the answer is usually discovered too late.
+description: "Lock-in is an accumulation, not a decision. A one-hour exercise: for each component, what would it cost to replace it, and where does lock-in actually build up?"
 kind: concept
 definition:
   url: "https://opendatalakehouse.com/kb/format-interoperability/"

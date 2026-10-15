@@ -21,7 +21,16 @@ const { title, description, jsonLd = [], keywords = [], ogType = 'website' } = A
 
 const SITE = 'https://openlakehouse.alexmerced.com';
 const canonical = new URL(Astro.url.pathname.replace(/\/?$/, '/'), SITE).href;
-const fullTitle = Astro.url.pathname === '/' ? title : `${title} | Alex Merced, Open Lakehouse advocate`;
+// Keep titles under about 60 characters: shorten, then drop, the site suffix when the page title is long.
+const SUFFIX = ' | Alex Merced, Open Lakehouse advocate';
+const fullTitle =
+  Astro.url.pathname === '/'
+    ? title
+    : (title + SUFFIX).length <= 60
+      ? `${title}${SUFFIX}`
+      : (title + ' | Alex Merced').length <= 60
+        ? `${title} | Alex Merced`
+        : title;
 
 const baseGraph = [
   {

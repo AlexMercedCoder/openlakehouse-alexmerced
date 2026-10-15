@@ -1,6 +1,7 @@
 ---
 title: Catalog
 summary: The service that resolves table names, performs the atomic commit, enforces access, and hands out scoped credentials.
+description: "The lakehouse catalog resolves table names, performs the atomic commit, enforces access, and hands out scoped credentials. Every read or write asks it first."
 kind: concept
 definition:
   url: "https://opendatalakehouse.com/kb/iceberg-catalog/"

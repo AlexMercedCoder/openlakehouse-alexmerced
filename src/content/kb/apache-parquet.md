@@ -1,6 +1,7 @@
 ---
 title: Apache Parquet
 summary: The columnar file format most lakehouse data sits in, built to be small on disk and cheap to scan selectively.
+description: "Apache Parquet is the columnar file format most lakehouse data sits in, built to read a few columns from many rows cheaply from storage that bills by bytes."
 kind: technology
 definition:
   url: "https://opendatalakehouse.com/kb/parquet-format/"

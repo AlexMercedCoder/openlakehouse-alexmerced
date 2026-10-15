@@ -1,6 +1,7 @@
 ---
 title: Query engines
 summary: The compute that reads the stack, kept separate from storage so you can run several and replace any of them.
+description: "Query engines are the compute that reads the lakehouse, kept separate from storage so you can run several on one copy of data and replace any of them later."
 kind: concept
 definition:
   url: "https://opendatalakehouse.com/kb/compute-engine/"

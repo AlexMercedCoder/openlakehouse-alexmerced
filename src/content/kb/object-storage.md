@@ -1,6 +1,7 @@
 ---
 title: Object storage
 summary: The durable, cheap byte store at the bottom of the stack, and the constraints it imposes on everything above it.
+description: "Object storage is the durable, cheap byte store under the lakehouse. Objects are immutable and every request costs, which shapes every layer built above it."
 kind: concept
 definition:
   url: "https://opendatalakehouse.com/kb/object-storage/"
